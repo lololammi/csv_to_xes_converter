@@ -6,11 +6,11 @@ import re
 # USER CONFIGURATION
 # ==============================
 
-INPUT_CSV = "query(14).csv"
-OUTPUT_XES = "output.xes"
+INPUT_CSV = "Data/edgepi_all_150ishruns_260311.csv"
+OUTPUT_XES = "output_distributing.xes"
 MAPPING_FILE = "event_name_mapping.csv"
 
-ID_MEASUREMENT = "PUT_YOUR_ID_MEASUREMENT_NAME_HERE"
+ID_MEASUREMENT = "opcua.0.vars.Objects.ServerInterfaces.Event-Log_Dis.ID"
 
 EVENT_REGEX = r"^opcua\.0\.vars\.Objects\.ServerInterfaces\.Event-Log_Dis\.([A-Za-z0-9_]+)$"
 
@@ -21,7 +21,7 @@ EVENT_REGEX = r"^opcua\.0\.vars\.Objects\.ServerInterfaces\.Event-Log_Dis\.([A-Z
 df = pd.read_csv(INPUT_CSV, skiprows=3)
 
 df.columns = [
-    "result", "table", "_start", "_stop",
+    "", "result", "table", "_start", "_stop",
     "_time", "_value", "_field", "_measurement"
 ]
 
@@ -49,16 +49,15 @@ pattern = re.compile(EVENT_REGEX)
 events = df[df["_measurement"].str.match(pattern, na=False)].copy()
 events["variable_name"] = events["_measurement"].str.extract(pattern)
 
-# Build original event name
 events["original_event_name"] = (
     events["variable_name"] + "_" +
     events["_value"].astype(str).str.lower()
 )
 
-# Apply mapping
-events["final_event_name"] = events["original_event_name"].map(
-    event_name_mapping
-)
+# keep only events present in mapping
+events = events[events["original_event_name"].isin(event_name_mapping)]
+
+events["final_event_name"] = events["original_event_name"].map(event_name_mapping)
 
 # If no mapping exists → keep original name
 events["final_event_name"] = events["final_event_name"].fillna(

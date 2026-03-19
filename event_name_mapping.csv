@@ -1,0 +1,10 @@
+original_name,new_name
+G1BG2_true,Lichtschranke vor RFID
+G1BG3_true,Lichtschranke Ende Station
+G2BG1_true,Magazin Rot Pusher hinten
+G2BG2_true,Magazin Rot Pusher vorne
+G3BG1_true,Magazin Schwarz Pusher hinten
+G3BG2_true,Magazin Schwarz Pusher vorne
+G4BG1_true,Magazin Silber Pusher hinten
+G4BG2_true,Magazin Silber Pusher vorne
+
