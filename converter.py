@@ -2,6 +2,7 @@ import pandas as pd
 import xml.etree.ElementTree as ET
 import argparse
 import re
+import datetime as datetime
 
 # ==============================
 # USER CONFIGURATION
@@ -36,7 +37,8 @@ df.columns = [
 ]
 
 # Convert timestamps
-df["_time"] = pd.to_datetime(df["_time"])
+df["_time"] = pd.to_datetime(df["_time"], errors="coerce")
+df = df.dropna(subset=["_time"])
 
 # Sort by time
 df = df.sort_values("_time")

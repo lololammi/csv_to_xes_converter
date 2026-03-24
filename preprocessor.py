@@ -32,6 +32,8 @@ def main():
     selected_columns = ["_time", "_value", "_measurement"]
     filtered_df = input_f[selected_columns]
 
+    
+
     try: 
         filtered_df.to_csv(OUTPUT_CSV)
     except: 
