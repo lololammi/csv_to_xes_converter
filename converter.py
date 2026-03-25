@@ -21,7 +21,7 @@ args = parser.parse_args();
 INPUT_CSV = args.infile
 OUTPUT_XES = args.outfile
 MAPPING_FILE = args.mapping
-EVENT_REGEX = r"([A-Za-z][0-9]+[A-Za-z]+\d)$"
+EVENT_REGEX = r"([A-Za-z][0-9]+[A-Za-z]+\d|State)$"
 ID_MEASUREMENT = "ID"
 
 
